@@ -4,7 +4,6 @@
  */
 
 /* eslint-disable */
-document.getElementById('input_2').disabled = true;
 var JotForm = {
     /**
      * JotForm domain
@@ -1123,7 +1122,7 @@ var JotForm = {
                 this.additionalActionsFormEmbedded();
 
                 // old form footer
-               /* var constructSubmitBanner = function(){
+                var constructSubmitBanner = function(){
                     var button = Array.from(document.querySelectorAll('.form-submit-button')).find(function(el) {return !(el.hasClassName('form-sacl-button') || el.hasClassName('js-new-sacl-button')) });
                     var brandingText = (JotForm.newDefaultTheme && JotForm.poweredByText) ? JotForm.poweredByText.replace(/Jotform/, '<b>Jotform</b>') : JotForm.poweredByText;
                     if (window && window.location.href.indexOf('branding21') !== -1) {
@@ -1181,7 +1180,7 @@ var JotForm = {
                           }
                         }
                     }
-                }*/
+                }
 
                 var createBadgeWrapperEl = function() {
                     var div = document.createElement('div');
@@ -1212,7 +1211,7 @@ var JotForm = {
                     var badgeWrapper = document.createElement('a');
                     badgeWrapper.setAttribute('class', badgeClass + '-wrapper');
                     if (!JotForm.enterprise) {
-                    //    badgeWrapper.setAttribute('href', badgeLink + '/?utm_source=formfooter&utm_medium=banner&utm_term=' + formID + '&utm_content=' + utmParameter + '&utm_campaign=form_badges' + urlParameter);
+                        badgeWrapper.setAttribute('href', badgeLink + '/?utm_source=formfooter&utm_medium=banner&utm_term=' + formID + '&utm_content=' + utmParameter + '&utm_campaign=form_badges' + urlParameter);
                         badgeWrapper.setAttribute('target', '_blank');
                     }
                     badgeWrapper.appendChild(banner);
@@ -1240,7 +1239,7 @@ var JotForm = {
                     var A11yWrapper = document.createElement('a');
                     A11yWrapper.setAttribute('class', 'accessibility-badge-wrapper');
                     if (!JotForm.enterprise) {
-                      //  A11yWrapper.setAttribute('href', 'https://www.jotform.com/accessible-forms/?utm_source=formfooter&utm_medium=banner&utm_term=' + formID + '&utm_content=accessibility_enabled_form&utm_campaign=form_badges');
+                        A11yWrapper.setAttribute('href', 'https://www.jotform.com/accessible-forms/?utm_source=formfooter&utm_medium=banner&utm_term=' + formID + '&utm_content=accessibility_enabled_form&utm_campaign=form_badges');
                         A11yWrapper.setAttribute('target', '_blank');
                     }
 
@@ -1280,7 +1279,7 @@ var JotForm = {
 
                 // Campaign Injection
                 if (typeof JotForm.forms[0].id !== "undefined" && false) {
-                //    JotForm.loadScript('https://www.jotform.com/jfFormFooter/assets/js/main.min.js?v_' + (new Date()).getTime());
+                    JotForm.loadScript('https://www.jotform.com/jfFormFooter/assets/js/main.min.js?v_' + (new Date()).getTime());
                 }
                 // only chrome support IDNs:  https://www.jotform.com/ticket-categorize/1711024
                 if (jotformForm) {
@@ -13787,11 +13786,11 @@ var JotForm = {
                             && $$('ul.form-section.page-section').length > 1)  // this is a multipage form
                         {
                             var visibleButtons = [];
-                            // $$('.form-submit-button').each(function (btn) {
-                            //     if (btn.isVisible()) {
-                            //         visibleButtons.push(btn);
-                            //     }
-                            // });
+                            $$('.form-submit-button').each(function (btn) {
+                                if (btn.isVisible()) {
+                                    visibleButtons.push(btn);
+                                }
+                            });
                             if (visibleButtons.length < 1) {
                                 return;
                             } // no visible submit buttons
@@ -14819,25 +14818,25 @@ var JotForm = {
 
     hideButtonMessage: function () {
       if (window.FORM_MODE == 'cardform') {
-        // $$('.form-submit-button').each(function (button) {
-        //   var buttonParentNode = button.parentNode.parentNode;
+        $$('.form-submit-button').each(function (button) {
+          var buttonParentNode = button.parentNode.parentNode;
 
-        //   var errorBox = buttonParentNode.select('.form-button-error')[0];
-        //   if (errorBox && buttonParentNode.hasClassName('jfCard')) {
-        //     var buttonParentNodeRect = buttonParentNode.getBoundingClientRect();
-        //     var errorBoxRect = errorBox.getBoundingClientRect();
+          var errorBox = buttonParentNode.select('.form-button-error')[0];
+          if (errorBox && buttonParentNode.hasClassName('jfCard')) {
+            var buttonParentNodeRect = buttonParentNode.getBoundingClientRect();
+            var errorBoxRect = errorBox.getBoundingClientRect();
 
-        //     var qContainer = buttonParentNode.select('.jfCard-question')[0];
-        //     if (qContainer) {
-        //       var qContainerRect = qContainer.getBoundingClientRect(qContainer);
+            var qContainer = buttonParentNode.select('.jfCard-question')[0];
+            if (qContainer) {
+              var qContainerRect = qContainer.getBoundingClientRect(qContainer);
 
-        //       buttonParentNode.style.maxHeight = buttonParentNodeRect.height + errorBoxRect.height;
-        //       qContainer.style.maxHeight = qContainerRect.height + errorBoxRect.height;
+              buttonParentNode.style.maxHeight = buttonParentNodeRect.height + errorBoxRect.height;
+              qContainer.style.maxHeight = qContainerRect.height + errorBoxRect.height;
 
-        //       buttonParentNode.parentNode.style.paddingBottom = 'unset';
-        //     }
-        //   }
-        // });
+              buttonParentNode.parentNode.style.paddingBottom = 'unset';
+            }
+          }
+        });
       }
 
       $$('.form-button-error').invoke('remove');
@@ -14846,44 +14845,44 @@ var JotForm = {
     showButtonMessage: function (txt) {
         this.hideButtonMessage();
 
-        // $$('.form-submit-button').each(function (button) {
-        //     if (JotForm.isSourceTeam) {
-        //         return;
-        //     }
-        //     if (button && button.getAttribute('class').indexOf('form-sacl-button') > -1) {
-        //         return;
-        //     }
-        //     var errorBox = new Element('div', {
-        //         className: 'form-button-error',
-        //         role: 'alert'
-        //     });
+        $$('.form-submit-button').each(function (button) {
+            if (JotForm.isSourceTeam) {
+                return;
+            }
+            if (button && button.getAttribute('class').indexOf('form-sacl-button') > -1) {
+                return;
+            }
+            var errorBox = new Element('div', {
+                className: 'form-button-error',
+                role: 'alert'
+            });
 
-        //     errorBox.insert('<p>' + (typeof txt !== "undefined" ? txt : JotForm.texts.generalError) + '</p>');
+            errorBox.insert('<p>' + (typeof txt !== "undefined" ? txt : JotForm.texts.generalError) + '</p>');
 
-        //     var buttonParentNode = button.parentNode.parentNode;
-        //     $(buttonParentNode).insert(errorBox);
+            var buttonParentNode = button.parentNode.parentNode;
+            $(buttonParentNode).insert(errorBox);
 
-        //     if (buttonParentNode.hasClassName('jfCard')) {
-        //       var buttonParentNodeRect = buttonParentNode.getBoundingClientRect();
+            if (buttonParentNode.hasClassName('jfCard')) {
+              var buttonParentNodeRect = buttonParentNode.getBoundingClientRect();
 
-        //       var progressWrapper = document.querySelector('#cardProgress');
-        //       var progressRect = progressWrapper.getBoundingClientRect();
+              var progressWrapper = document.querySelector('#cardProgress');
+              var progressRect = progressWrapper.getBoundingClientRect();
 
-        //       var errorBoxRect = errorBox.getBoundingClientRect();
+              var errorBoxRect = errorBox.getBoundingClientRect();
 
-        //       if (errorBoxRect.bottom > progressRect.top && getComputedStyle(progressWrapper).display !== 'none') {
-        //         var qContainer = buttonParentNode.select('.jfCard-question')[0];
-        //         if (qContainer) {
-        //           var qContainerRect = qContainer.getBoundingClientRect(qContainer);
+              if (errorBoxRect.bottom > progressRect.top && getComputedStyle(progressWrapper).display !== 'none') {
+                var qContainer = buttonParentNode.select('.jfCard-question')[0];
+                if (qContainer) {
+                  var qContainerRect = qContainer.getBoundingClientRect(qContainer);
 
-        //           buttonParentNode.style.maxHeight = buttonParentNodeRect.height - errorBoxRect.height;
-        //           qContainer.style.maxHeight = qContainerRect.height - errorBoxRect.height;
+                  buttonParentNode.style.maxHeight = buttonParentNodeRect.height - errorBoxRect.height;
+                  qContainer.style.maxHeight = qContainerRect.height - errorBoxRect.height;
 
-        //           buttonParentNode.parentNode.style.paddingBottom = errorBoxRect.height;
-        //         }
-        //       }
-        //     }
-        // });
+                  buttonParentNode.parentNode.style.paddingBottom = errorBoxRect.height;
+                }
+              }
+            }
+        });
     },
 
     _errTimeout: null,
@@ -14974,263 +14973,263 @@ var JotForm = {
 
             form.validationSet = true;
             // Set on submit validation
-            // form.observe('submit', function (e) {
-            //     try {
-            //         if (JotForm.handleMinTotalOrderAmount() === true && window.paymentType === 'product') {
-            //           e.stop();
-            //         }
+            form.observe('submit', function (e) {
+                try {
+                    if (JotForm.handleMinTotalOrderAmount() === true && window.paymentType === 'product') {
+                      e.stop();
+                    }
 
-            //         if (
-            //             window.FORM_MODE != 'cardform' &&
-            //             typeof PaymentStock !== 'undefined' &&
-            //             !PaymentStock.validations.validateStock()
-            //         ) {
-            //             e.stop();
-            //         }
+                    if (
+                        window.FORM_MODE != 'cardform' &&
+                        typeof PaymentStock !== 'undefined' &&
+                        !PaymentStock.validations.validateStock()
+                    ) {
+                        e.stop();
+                    }
 
-            //         if ($('payment_total_checksum')) {
-            //             $('payment_total_checksum').value = JotForm.paymentTotal;
-            //         }
-            //         if ($$('.form-submit-button') && $$('.form-submit-button').length > 0) {
-            //             //only submit form if a submit button is visible
-            //             var aSubmitIsVisible = false;
-            //             $$('.form-submit-button').each(function (el) {
-            //                 if (JotForm.isVisible(el.parentNode)) {
-            //                     aSubmitIsVisible = true;
-            //                     return;
-            //                 }
-            //             });
-            //             if (!aSubmitIsVisible) {
-            //                 JotForm.enableButtons();
-            //                 e.stop();
-            //             }
-            //             // invisible recaptcha for classic forms
-            //             var invisibleCaptchaWrapper = $$('[data-invisible-captcha="true"]');
-            //             var hasInvisibleCaptcha = !!invisibleCaptchaWrapper.length;
-            //             if (hasInvisibleCaptcha) {
-            //                 var recaptchasHiddenInput = invisibleCaptchaWrapper[0].select('[name="recaptcha_invisible"]')[0];
-            //                 var isCaptchaValidated = recaptchasHiddenInput && recaptchasHiddenInput.getValue();
-            //                 if (!isCaptchaValidated) {
-            //                     window.grecaptcha.execute();
-            //                     JotForm.enableButtons();
-            //                     e.stop();
-            //                     return;
-            //                 }
-            //             }
-            //         }
+                    if ($('payment_total_checksum')) {
+                        $('payment_total_checksum').value = JotForm.paymentTotal;
+                    }
+                    if ($$('.form-submit-button') && $$('.form-submit-button').length > 0) {
+                        //only submit form if a submit button is visible
+                        var aSubmitIsVisible = false;
+                        $$('.form-submit-button').each(function (el) {
+                            if (JotForm.isVisible(el.parentNode)) {
+                                aSubmitIsVisible = true;
+                                return;
+                            }
+                        });
+                        if (!aSubmitIsVisible) {
+                            JotForm.enableButtons();
+                            e.stop();
+                        }
+                        // invisible recaptcha for classic forms
+                        var invisibleCaptchaWrapper = $$('[data-invisible-captcha="true"]');
+                        var hasInvisibleCaptcha = !!invisibleCaptchaWrapper.length;
+                        if (hasInvisibleCaptcha) {
+                            var recaptchasHiddenInput = invisibleCaptchaWrapper[0].select('[name="recaptcha_invisible"]')[0];
+                            var isCaptchaValidated = recaptchasHiddenInput && recaptchasHiddenInput.getValue();
+                            if (!isCaptchaValidated) {
+                                window.grecaptcha.execute();
+                                JotForm.enableButtons();
+                                e.stop();
+                                return;
+                            }
+                        }
+                    }
 
-            //         if (JotForm.disableSubmitButton) {
-            //             JotForm.toggleDisableSubmitMessage();
-            //             JotForm.enableButtons();
-            //             e.stop();
-            //             return;
-            //         }
+                    if (JotForm.disableSubmitButton) {
+                        JotForm.toggleDisableSubmitMessage();
+                        JotForm.enableButtons();
+                        e.stop();
+                        return;
+                    }
 
-            //         if (!JotForm.validateAll(form)) {
-            //             JotForm.enableButtons();
-            //             JotForm.showButtonMessage();
-            //             JotForm.updateErrorNavigation(true);
+                    if (!JotForm.validateAll(form)) {
+                        JotForm.enableButtons();
+                        JotForm.showButtonMessage();
+                        JotForm.updateErrorNavigation(true);
 
-            //             if (JotForm.submitError) {
-            //                 if (JotForm.submitError == "jumpToSubmit") {
-            //                     var visSubmit = [];
-            //                     $$('.form-submit-button').each(function (but) {
-            //                         if (JotForm.isVisible(but)) {
-            //                             visSubmit.push(but);
-            //                         }
-            //                     });
-            //                     if (visSubmit.length > 0) {
-            //                         if (visSubmit[visSubmit.length - 1].up('.form-line')) {
-            //                             visSubmit[visSubmit.length - 1].up('.form-line').scrollIntoView(false);
-            //                         } else {
-            //                             visSubmit[visSubmit.length - 1].scrollIntoView(false);
-            //                         }
-            //                     }
-            //                 } else if (JotForm.submitError == "jumpToFirstError") {
-            //                     setTimeout(function () {
-            //                         JotForm.setPagePositionForError();
-            //                     }, 100);
-            //                 }
-            //             }
+                        if (JotForm.submitError) {
+                            if (JotForm.submitError == "jumpToSubmit") {
+                                var visSubmit = [];
+                                $$('.form-submit-button').each(function (but) {
+                                    if (JotForm.isVisible(but)) {
+                                        visSubmit.push(but);
+                                    }
+                                });
+                                if (visSubmit.length > 0) {
+                                    if (visSubmit[visSubmit.length - 1].up('.form-line')) {
+                                        visSubmit[visSubmit.length - 1].up('.form-line').scrollIntoView(false);
+                                    } else {
+                                        visSubmit[visSubmit.length - 1].scrollIntoView(false);
+                                    }
+                                }
+                            } else if (JotForm.submitError == "jumpToFirstError") {
+                                setTimeout(function () {
+                                    JotForm.setPagePositionForError();
+                                }, 100);
+                            }
+                        }
 
-            //             $$('.custom-hint-group').each(function (elem) { //redisplay textarea hints
-            //                 elem.showCustomPlaceHolder();
-            //             });
+                        $$('.custom-hint-group').each(function (elem) { //redisplay textarea hints
+                            elem.showCustomPlaceHolder();
+                        });
 
-            //             e.stop();
-            //             return;
-            //         }
+                        e.stop();
+                        return;
+                    }
 
-            //         if (JotForm.validatedRequiredFieldIDs != null && typeof JotForm.validatedRequiredFieldIDs === 'object') {
-            //             form.insert(new Element('input', {type: 'hidden', name: 'validatedNewRequiredFieldIDs'}).putValue(JSON.stringify((Object.keys(JotForm.validatedRequiredFieldIDs).length > 0 && JotForm.validatedRequiredFieldIDs) || 'No validated required fields')));
-            //         }
-            //         //if 'other' not checked disable corresponding textbox
-            //         $$('.form-radio-other,.form-checkbox-other').each(function (el) {
-            //             if (!el.checked && JotForm.getOptionOtherInput(el)) {
-            //                 JotForm.getOptionOtherInput(el).disable();
-            //             }
-            //         });
+                    if (JotForm.validatedRequiredFieldIDs != null && typeof JotForm.validatedRequiredFieldIDs === 'object') {
+                        form.insert(new Element('input', {type: 'hidden', name: 'validatedNewRequiredFieldIDs'}).putValue(JSON.stringify((Object.keys(JotForm.validatedRequiredFieldIDs).length > 0 && JotForm.validatedRequiredFieldIDs) || 'No validated required fields')));
+                    }
+                    //if 'other' not checked disable corresponding textbox
+                    $$('.form-radio-other,.form-checkbox-other').each(function (el) {
+                        if (!el.checked && JotForm.getOptionOtherInput(el)) {
+                            JotForm.getOptionOtherInput(el).disable();
+                        }
+                    });
 
-            //         JotForm.runAllCalculations(true);
+                    JotForm.runAllCalculations(true);
 
-            //         if ($$('input, select, textarea').length > 900) { //collapse matrices for long forms
-            //             $$('.form-matrix-table').each(function (matrixTable) {
-            //                 var matrixObject = {};
-            //                 var inputs = matrixTable.select("input, select");
-            //                 var isDynamic = matrixTable.dataset.dynamic;
-            //                 inputs.each(function (input) {
-            //                     var ids = input.id.split("_");
-            //                     var x = ids[2];
-            //                     var y = ids[3];
-            //                     if (input.type == "radio" && !isDynamic) {
-            //                         if (input.checked) {
-            //                             matrixObject[x] = input.value;
-            //                         } else if (!(x in matrixObject)) {
-            //                             matrixObject[x] = false;
-            //                         }
-            //                     } else {
-            //                         if (!(x in matrixObject)) {
-            //                             matrixObject[x] = {};
-            //                         }
-            //                         if (input.type == "checkbox" || input.type == "radio") {
-            //                             matrixObject[x][y] = input.checked ? input.value : false;
-            //                         } else {
-            //                             matrixObject[x][y] = input.value;
-            //                         }
-            //                     }
-            //                     input.writeAttribute("disabled", "true");
-            //                 });
+                    if ($$('input, select, textarea').length > 900) { //collapse matrices for long forms
+                        $$('.form-matrix-table').each(function (matrixTable) {
+                            var matrixObject = {};
+                            var inputs = matrixTable.select("input, select");
+                            var isDynamic = matrixTable.dataset.dynamic;
+                            inputs.each(function (input) {
+                                var ids = input.id.split("_");
+                                var x = ids[2];
+                                var y = ids[3];
+                                if (input.type == "radio" && !isDynamic) {
+                                    if (input.checked) {
+                                        matrixObject[x] = input.value;
+                                    } else if (!(x in matrixObject)) {
+                                        matrixObject[x] = false;
+                                    }
+                                } else {
+                                    if (!(x in matrixObject)) {
+                                        matrixObject[x] = {};
+                                    }
+                                    if (input.type == "checkbox" || input.type == "radio") {
+                                        matrixObject[x][y] = input.checked ? input.value : false;
+                                    } else {
+                                        matrixObject[x][y] = input.value;
+                                    }
+                                }
+                                input.writeAttribute("disabled", "true");
+                            });
 
-            //                 try {
-            //                     var name = matrixTable.down('input, select').readAttribute("name").split("[")[0];
-            //                     var matrixArea = new Element("textarea").setStyle({display: 'none'});
-            //                     matrixTable.insert({after: matrixArea});
-            //                     matrixArea.value = JSON.stringify(matrixObject);
-            //                     matrixArea.writeAttribute("name", name);
-            //                 } catch (e) {
-            //                     console.log(e);
-            //                 }
-            //             });
-            //         }
+                            try {
+                                var name = matrixTable.down('input, select').readAttribute("name").split("[")[0];
+                                var matrixArea = new Element("textarea").setStyle({display: 'none'});
+                                matrixTable.insert({after: matrixArea});
+                                matrixArea.value = JSON.stringify(matrixObject);
+                                matrixArea.writeAttribute("name", name);
+                            } catch (e) {
+                                console.log(e);
+                            }
+                        });
+                    }
 
-            //         if (JotForm.autoFillDeployed && !JotForm.payment) {
-            //             if (typeof window.localStorage !== 'undefined') {
-            //                 var formID = $$('form').first().readAttribute('id') + $$('form').first().readAttribute('name');
-            //                 AutoFill.getInstance(formID).stopSavingData();
-            //                 window.localStorage.clear();
-            //             }
-            //         } else if (JotForm.isNewSaveAndContinueLaterActive && typeof window.localStorage !== 'undefined') {
-            //             window.localStorage.removeItem('JFU_SCL_details_' + $$('form').first().readAttribute('id'));
-            //         }
+                    if (JotForm.autoFillDeployed && !JotForm.payment) {
+                        if (typeof window.localStorage !== 'undefined') {
+                            var formID = $$('form').first().readAttribute('id') + $$('form').first().readAttribute('name');
+                            AutoFill.getInstance(formID).stopSavingData();
+                            window.localStorage.clear();
+                        }
+                    } else if (JotForm.isNewSaveAndContinueLaterActive && typeof window.localStorage !== 'undefined') {
+                        window.localStorage.removeItem('JFU_SCL_details_' + $$('form').first().readAttribute('id'));
+                    }
 
-            //     } catch (err) {
-            //         JotForm.error(err);
-            //         e.stop();
-            //         var logTitle = e.stopped ? 'FORM_VALIDATION_ERROR' : 'FORM_VALIDATION_EVENT_NOT_STOPPED';
-            //         $this.errorCatcherLog(err, logTitle);
-            //         return;
-            //     }
+                } catch (err) {
+                    JotForm.error(err);
+                    e.stop();
+                    var logTitle = e.stopped ? 'FORM_VALIDATION_ERROR' : 'FORM_VALIDATION_EVENT_NOT_STOPPED';
+                    $this.errorCatcherLog(err, logTitle);
+                    return;
+                }
 
-            //     //enable any disabled(readonly) time dropdowns so they are submitted with the form
-            //     $$('.time-dropdown').each(function (el) {
-            //         el.enable();
-            //     });
-            //     $$('.form-checkbox, .form-radio').each(function (el) {
-            //         // Some gateways has own validation. Will enable in there. 
-            //         // Look at for Ex. stripeSCA.js:resubmitForm function
-            //         var stoppedGateways = ['control_paypalcomplete', 'control_stripe', 'control_paypalSPB'];
-            //         var gateway = el.up('.form-line') ? el.up('.form-line').getAttribute('data-type') : null;
-            //         // For temporarily. This improvement only for Stripe new version. Will be remove after lunch.
-            //         var isNewStripe = JotForm.stripe && typeof JotForm.stripe.validateStripe !== 'undefined';
+                //enable any disabled(readonly) time dropdowns so they are submitted with the form
+                $$('.time-dropdown').each(function (el) {
+                    el.enable();
+                });
+                $$('.form-checkbox, .form-radio').each(function (el) {
+                    // Some gateways has own validation. Will enable in there. 
+                    // Look at for Ex. stripeSCA.js:resubmitForm function
+                    var stoppedGateways = ['control_paypalcomplete', 'control_stripe', 'control_paypalSPB'];
+                    var gateway = el.up('.form-line') ? el.up('.form-line').getAttribute('data-type') : null;
+                    // For temporarily. This improvement only for Stripe new version. Will be remove after lunch.
+                    var isNewStripe = JotForm.stripe && typeof JotForm.stripe.validateStripe !== 'undefined';
 
-            //         if (gateway && stoppedGateways.indexOf(gateway) > -1) {
-            //             if (gateway === 'control_stripe' && isNewStripe) {
-            //                 return false;
-            //             } else if (gateway !== 'control_stripe') {
-            //                 return false;
-            //             }
-            //         }
+                    if (gateway && stoppedGateways.indexOf(gateway) > -1) {
+                        if (gateway === 'control_stripe' && isNewStripe) {
+                            return false;
+                        } else if (gateway !== 'control_stripe') {
+                            return false;
+                        }
+                    }
 
-            //         // prevent required products from being unrequired after a validation failure
-            //         if (el.up('.form-product-item') && el.disabled && el.checked) {
-            //             el.observe('click', function(e) {
-            //                 e.preventDefault();
-            //                 setTimeout(JotForm.countTotal, 20);
-            //             });
-            //         }
+                    // prevent required products from being unrequired after a validation failure
+                    if (el.up('.form-product-item') && el.disabled && el.checked) {
+                        el.observe('click', function(e) {
+                            e.preventDefault();
+                            setTimeout(JotForm.countTotal, 20);
+                        });
+                    }
 
-            //         el.enable();
-            //     });
-            //     $$('.conditionallyDisabled').each(function (el) {
-            //         el.enable();
-            //     });
+                    el.enable();
+                });
+                $$('.conditionallyDisabled').each(function (el) {
+                    el.enable();
+                });
 
-            //     // We will clear the contents of hidden fields, users don't want see the hidden fields on subscriptions
-            //     if (JotForm.clearFieldOnHide !== "dontClear") {
-            //         $$('.form-field-hidden input', '.form-field-hidden select', '.form-field-hidden textarea').each(function (input) {
-            //             if (input.name == "simple_fpc") { // do not clear this field's value
-            //                 return;
-            //             }
+                // We will clear the contents of hidden fields, users don't want see the hidden fields on subscriptions
+                if (JotForm.clearFieldOnHide !== "dontClear") {
+                    $$('.form-field-hidden input', '.form-field-hidden select', '.form-field-hidden textarea').each(function (input) {
+                        if (input.name == "simple_fpc") { // do not clear this field's value
+                            return;
+                        }
 
-            //             if (input.tagName == 'INPUT' && ['checkbox', 'radio'].include(input.type)) {
-            //                 input.checked = false;
-            //             } else {
-            //                 input.clear();
-            //             }
-            //         });
-            //     }
-            //     var numberOfInputs = form.querySelectorAll('.form-all input, select').length;
-            //     if (numberOfInputs > 3000){ // to bypass max_input_vars - 3000 limit
-            //       JotForm.removeNonselectedProducts(form);
-            //     }
+                        if (input.tagName == 'INPUT' && ['checkbox', 'radio'].include(input.type)) {
+                            input.checked = false;
+                        } else {
+                            input.clear();
+                        }
+                    });
+                }
+                var numberOfInputs = form.querySelectorAll('.form-all input, select').length;
+                if (numberOfInputs > 3000){ // to bypass max_input_vars - 3000 limit
+                  JotForm.removeNonselectedProducts(form);
+                }
 
-            //     if (JotForm.compact && JotForm.imageSaved == false) {
-            //         e.stop();
-            //         window.parent.saveAsImage();
-            //         // JotForm.enableButtons();
-            //         $(document).observe('image:loaded', function () {
-            //             var block;
-            //             $(document.body).insert(block = new Element('div').setStyle('position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);'));
-            //             block.insert('<table height="100%" width="100%"><tr><td align="center" valign="middle" style="font-family:Verdana;color:#fff;font-size:16px;">Please Wait...</td></tr></table>');
-            //             setTimeout(function () {
-            //                 form.submit();
-            //             }, 1000);
-            //         });
-            //         return;
-            //     }
+                if (JotForm.compact && JotForm.imageSaved == false) {
+                    e.stop();
+                    window.parent.saveAsImage();
+                    // JotForm.enableButtons();
+                    $(document).observe('image:loaded', function () {
+                        var block;
+                        $(document.body).insert(block = new Element('div').setStyle('position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);'));
+                        block.insert('<table height="100%" width="100%"><tr><td align="center" valign="middle" style="font-family:Verdana;color:#fff;font-size:16px;">Please Wait...</td></tr></table>');
+                        setTimeout(function () {
+                            form.submit();
+                        }, 1000);
+                    });
+                    return;
+                }
 
-            //     if (window.FORM_MODE == 'cardform' && Array.prototype.forEach && CardForm && CardForm.cards) { // ie8 & isCardform Checks
-            //         if (window.toMarkdown) {
-            //             Array.prototype.forEach.call(CardForm.cards, function (card, index) {
-            //                 if (card.markdownEditor && card.markdownEditor.setMarkdownFromHtml) {
-            //                     // if the textarea has Markdown editor,
-            //                     card.markdownEditor.setMarkdownFromHtml();
-            //                 }
-            //             });
-            //         }
-            //     }
-            //     var previouslyEncryptedWithV2 = JotForm.isEditMode() && !!JotForm.submissionDecryptionKey;
-            //     if (JotForm.isEncrypted || previouslyEncryptedWithV2) {
-            //         var redirectConditions = {};
-            //         $A(JotForm.conditions).each(function (condition) {
-            //             if(!condition.disabled && condition.type === 'url') {
-            //                 redirectConditions[condition.id] = JotForm.checkCondition(condition);
-            //             }
-            //         });
-            //         JotForm.encryptAll(e, function(submitForm) {
-            //             if (submitForm) {
-            //                 // Check if there are conditions for redirection
-            //                 if (Object.keys(redirectConditions).length > 0) {
-            //                     appendHiddenInput('redirectConditions', JSON.stringify(redirectConditions));
-            //                 }
-            //                 if(!window.offlineForm) {
-            //                     form.submit();
-            //                 }
-            //             }
-            //         });
-            //     }
-            //     history.pushState({submitted: true}, null, null);
-            // });
+                if (window.FORM_MODE == 'cardform' && Array.prototype.forEach && CardForm && CardForm.cards) { // ie8 & isCardform Checks
+                    if (window.toMarkdown) {
+                        Array.prototype.forEach.call(CardForm.cards, function (card, index) {
+                            if (card.markdownEditor && card.markdownEditor.setMarkdownFromHtml) {
+                                // if the textarea has Markdown editor,
+                                card.markdownEditor.setMarkdownFromHtml();
+                            }
+                        });
+                    }
+                }
+                var previouslyEncryptedWithV2 = JotForm.isEditMode() && !!JotForm.submissionDecryptionKey;
+                if (JotForm.isEncrypted || previouslyEncryptedWithV2) {
+                    var redirectConditions = {};
+                    $A(JotForm.conditions).each(function (condition) {
+                        if(!condition.disabled && condition.type === 'url') {
+                            redirectConditions[condition.id] = JotForm.checkCondition(condition);
+                        }
+                    });
+                    JotForm.encryptAll(e, function(submitForm) {
+                        if (submitForm) {
+                            // Check if there are conditions for redirection
+                            if (Object.keys(redirectConditions).length > 0) {
+                                appendHiddenInput('redirectConditions', JSON.stringify(redirectConditions));
+                            }
+                            if(!window.offlineForm) {
+                                form.submit();
+                            }
+                        }
+                    });
+                }
+                history.pushState({submitted: true}, null, null);
+            });
 
             // for each validation element
             $$('#' + form.id + ' *[class*="validate"]').each(function (input) {
@@ -18754,9 +18753,9 @@ var JotForm = {
             }
         });
 
-        // $$('.form-submit-button').each(function(btn) {
-        //     btn.setStyle({ 'pointer-events': 'none', 'opacity': '0.3' });
-        // });
+        $$('.form-submit-button').each(function(btn) {
+            btn.setStyle({ 'pointer-events': 'none', 'opacity': '0.3' });
+        });
 
         window.addEventListener('message', function(event) {
             if (event.data.source !== 'jfManual_prefill') return;
